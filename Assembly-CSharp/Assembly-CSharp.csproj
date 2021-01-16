@@ -9,7 +9,7 @@
         <OutputPath>bin\$(Configuration)\</OutputPath>
         <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
         <RestorePackagesPath>packages</RestorePackagesPath>
-        <LangVersion>latest</LangVersion>
+        <LangVersion>8</LangVersion>
     </PropertyGroup>
 
     <ItemGroup>
