@@ -34,7 +34,13 @@
 
         <Copy SkipUnchangedFiles="true" SourceFiles="@(Files)" DestinationFolder="@(BuildDir)" />
 
-        <Exec Condition="!Exists('$(TargetDir)Assembly-CSharp-patched.dll')" WorkingDirectory="@(BuildDir)" Command="$(Mono) PrePatcher.exe Assembly-CSharp.dll Assembly-CSharp-patched.dll" />
+        <MakeDir Directories="$(TargetDir)PrePatcherIsolation" />
+        <Copy SourceFiles="$(TargetDir)PrePatcher.exe" DestinationFolder="$(TargetDir)PrePatcherIsolation" />
+        <Copy SourceFiles="$(TargetDir)Mono.Cecil.dll" DestinationFolder="$(TargetDir)PrePatcherIsolation" />
+        <Copy SourceFiles="$(TargetDir)Mono.Cecil.Mdb.dll" DestinationFolder="$(TargetDir)PrePatcherIsolation" />
+        <Copy SourceFiles="$(TargetDir)Mono.Cecil.Pdb.dll" DestinationFolder="$(TargetDir)PrePatcherIsolation" />
+        <Copy SourceFiles="$(TargetDir)Mono.Cecil.Rocks.dll" DestinationFolder="$(TargetDir)PrePatcherIsolation" />
+        <Exec Condition="!Exists('$(TargetDir)Assembly-CSharp-patched.dll')" WorkingDirectory="@(BuildDir)" Command="$(Mono) PrePatcherIsolation\PrePatcher.exe Assembly-CSharp.dll Assembly-CSharp-patched.dll" />
         <Copy SkipUnchangedFiles="true" SourceFiles="$(TargetDir)Assembly-CSharp-patched.dll" DestinationFiles="$(TargetDir)Assembly-CSharp.dll" />
 
         <Delete Condition="Exists('MONOMODDED_Assembly-CSharp.dll')" Files="MONOMODDED_Assembly-CSharp.dll" />
